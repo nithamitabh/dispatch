@@ -10,20 +10,42 @@ import ThemeToggle from '@/components/theme-toggle'
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const [userName, setUserName] = useState<string>('')
+  const [isChecking, setIsChecking] = useState(true)
 
   useEffect(() => {
-    // Fetch user profile from session
+    // Fetch user profile and check authentication
     fetch('/api/user/profile')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          // Not authenticated, redirect to login
+          window.location.href = '/login'
+          return
+        }
+        return res.json()
+      })
       .then(data => {
-        if (data.user) {
+        if (data?.user) {
           setUserName(data.user.user_metadata?.name || data.user.email || 'User')
+          setIsChecking(false)
         }
       })
       .catch(() => {
-        // Silently handle errors
+        // Error, redirect to login
+        window.location.href = '/login'
       })
   }, [])
+
+  // Show loading while checking auth
+  if (isChecking) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-black">
+        <div className="text-center">
+          <div className="mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-4 border-cyan-500 border-t-transparent"></div>
+          <p className="text-slate-400">Loading...</p>
+        </div>
+      </div>
+    )
+  }
 
   const navItems = [
     { href: '/dashboard', label: 'Home', icon: (
