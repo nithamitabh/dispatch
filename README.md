@@ -91,17 +91,17 @@ Open [http://localhost:3000](http://localhost:3000) to see the app.
 
 #### 🚧 In Progress
 
-- [ ] 🔗 **Webhook URL Generation**
+- [X] 🔗 **Webhook URL Generation**
   - Generate unique webhook endpoints per publication
   - Display webhook setup instructions
 
-- [ ] 💾 **Token Storage**
+- [X] 💾 **Token Storage**
   - Store GitHub access_token securely in Supabase
   - Encrypt sensitive tokens
 
 #### 📋 Remaining Phase 1 Tasks
 
-- [ ] ✅ **Basic Testing**
+- [X] ✅ **Basic Testing**
   - Test GitHub OAuth flow end-to-end
   - Verify publication CRUD operations
   - Test theme persistence across sessions
